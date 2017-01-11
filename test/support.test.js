@@ -30,6 +30,10 @@ describe('support', function() {
             var ampImgString = support.buildAmpImgFromProperties({})
             assert.equal(ampImgString, "<amp-img></amp-img>")
         })
+        it('should join properties with an = and separate by a space', ()=>{
+            var ampImgString = support.buildAmpImgFromProperties({foo: 7})
+            assert.equal(ampImgString, "<amp-img foo=7></amp-img>")
+        })
     })
 
     describe('setImageSize', ()=>{

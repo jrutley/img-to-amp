@@ -37,9 +37,16 @@ var observable = sql("select * from conversations where question_response like '
 
 var observer = observable.subscribe(next=>{
     var reduced = next.token.reduce((acc,index)=>acc.concat(index))
-    
+    var question_response = ""
     reduced.subscribe(x=>{
-        console.log("Subscribed:")
-        console.log(x)
+        // onNext: build up the elements to parse
+        // TODO: Convert the objects into their string representation
+        question_response += x
+    },e=>{console.log("Error:" + e)},
+    complete=>{
+        // call sql update here
+        var result = "update conversations set question_response = '" + question_response + "' where fk_question_id = " + next.qid + " and order = " + next.order
+        // TODO: Escape '
+        console.log(result)
     })
 })

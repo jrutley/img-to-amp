@@ -12,8 +12,11 @@ const getImageProperties = img => {
         return newObj
     }
 const buildAmpImgFromProperties = props => {
-
-    return ampImgHead + ampImgTail
+    var output = ""
+    for (p in props){
+        output = output + " " + p + "=" + props[p]
+    }
+    return ampImgHead + output + ampImgTail
 }
 
 const setImageSize = (imgSrcObject, getImageFromFile) => {

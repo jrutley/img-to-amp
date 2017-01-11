@@ -1,5 +1,8 @@
 var Rx = require('rx')
 
+const ampImgHead = "<amp-img"
+const ampImgTail = "></amp-img>"
+
 const getImageProperties = img => {
         var newObj = {}
         var splitArray = img.split(" ")
@@ -8,6 +11,10 @@ const getImageProperties = img => {
             .map(kv=>newObj[kv[0]] = kv[1].replace(/\"/g,"").replace(">",""))
         return newObj
     }
+const buildAmpImgFromProperties = props => {
+
+    return ampImgHead + ampImgTail
+}
 
 const setImageSize = (imgSrcObject, getImageFromFile) => {
     var imgSizePromise = getImageFromFile(imgSrcObject.src).then(fileDimensions=>{
@@ -23,17 +30,17 @@ const setImageSize = (imgSrcObject, getImageFromFile) => {
                 ? imgSrcObject.width / ratio   // Scale down based on the width
                 : fileDimensions.height         // Use the file dimensions
     }
-    }, rej=> new Error("crap"))
+    }, rej=> new Error(rej))
     return imgSizePromise
 }
 
 const addAltTag = img => img
 const addEndTag = img => {
-    const endText = "></amp-img>", position = img.endsWith("/>")? -2 : -1
+    const endText = ampImgTail, position = img.endsWith("/>")? -2 : -1
     return img.slice(0,position) + endText
 }
-const convertToAmpImg = img => "<amp-img" + img.slice(4)
+const convertToAmpImg = img => ampImgHead + img.slice(4)
 
 module.exports = {setImageSize: setImageSize, addAltTag: addAltTag, addEndTag: addEndTag, convertToAmpImg: convertToAmpImg,
-    getImageProperties: getImageProperties
+    getImageProperties: getImageProperties, buildAmpImgFromProperties: buildAmpImgFromProperties
 }

@@ -25,6 +25,13 @@ describe('support', function() {
         })
     })
 
+    describe('buildAmpImgFromProperties', () =>{
+        it('should begin and end with an amp-img tag',()=>{
+            var ampImgString = support.buildAmpImgFromProperties({})
+            assert.equal(ampImgString, "<amp-img></amp-img>")
+        })
+    })
+
     describe('setImageSize', ()=>{
         const defaultImage = {width: 1000, height: 500}
         const squareImage = {width: 640, height: 640}

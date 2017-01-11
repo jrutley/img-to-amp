@@ -12,10 +12,10 @@ const transform = img =>{
         var imgTag = support.addEndTag(support.convertToAmpImg(img))
         var imageProperties = support.getImageProperties(imgTag)
         return support.setImageSize(imageProperties, imgSize).then((size,rej)=>{
-            var foo = imageProperties
-            foo.width = size.width
-            foo.height = size.height
-            return foo // add height and width here
+            var imageProps = JSON.parse(JSON.stringify(imageProperties))
+            imageProps.width = size.width
+            imageProps.height = size.height
+            return imageProps
         })
     }
 
